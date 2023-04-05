@@ -667,8 +667,9 @@ GameObject:
   - component: {fileID: 1041445997}
   - component: {fileID: 1041445996}
   - component: {fileID: 1041445995}
+  - component: {fileID: 1041445998}
   m_Layer: 5
-  m_Name: Button
+  m_Name: skipButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,6 +778,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041445993}
   m_CullTransparentMesh: 1
+--- !u!114 &1041445998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041445993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6733fb9ac67e7449922a0374dc8ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1655465820
 GameObject:
   m_ObjectHideFlags: 0
