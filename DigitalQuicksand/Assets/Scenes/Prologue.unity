@@ -669,7 +669,11 @@ GameObject:
   - component: {fileID: 1041445995}
   - component: {fileID: 1041445998}
   m_Layer: 5
+<<<<<<< Updated upstream
   m_Name: skipButton
+=======
+  m_Name: SkipButton
+>>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -787,9 +791,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1041445993}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: cd6733fb9ac67e7449922a0374dc8ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+  m_Script: {fileID: 11500000, guid: b977bdd06cf9ae94d9f05d3e5cca912b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skip: {fileID: 1041445995}
+>>>>>>> Stashed changes
 --- !u!1 &1655465820
 GameObject:
   m_ObjectHideFlags: 0
