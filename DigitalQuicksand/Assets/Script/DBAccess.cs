@@ -121,6 +121,23 @@ public class DBAccess : MonoBehaviour
         return ExecuteQuery(query);
     }
 
+    public SqliteDataReader UpdateWhere(string tableName, string[] cols, string[] colsvalues, string[] selectkeys, string[] selectvalues)
+    {
+        string query = "UPDATE " + tableName + " SET " + cols[0] + " = " + colsvalues[0];
+
+        for (int i = 1; i < colsvalues.Length; ++i)
+        {
+            query += ", " + cols[i] + " =" + colsvalues[i];
+        }
+        query += " WHERE " + selectkeys[0] + " = " + selectvalues[0] + " ";
+        for (int i = 1; i < selectkeys.Length; ++i)
+        {
+            query += " AND " + selectkeys[i] + " = " + selectvalues[i] + " ";
+        }
+
+        return ExecuteQuery(query);
+    }
+
     //테이블 값 삭제하기
     public SqliteDataReader DeleteContents(string tableName)
     {
