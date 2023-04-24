@@ -66,6 +66,7 @@ public class DBAccess : MonoBehaviour
     public SqliteDataReader ReadFullTable(string tableName)
     {
         string query = "SELECT * FROM " + tableName;
+
         return ExecuteQuery(query);
     }
 

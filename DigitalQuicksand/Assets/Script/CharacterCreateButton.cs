@@ -146,6 +146,7 @@ public class CharacterCreateButton : MonoBehaviour
             string id_s = reader["id"].ToString();
 
             GameManager.instance.char_id = Int32.Parse(id_s);
+            GameManager.instance.char_name = NameInput.text;
 
             CreateGenres();
             CreateProperties();
@@ -154,166 +155,84 @@ public class CharacterCreateButton : MonoBehaviour
             Debug.Log("캐릭터 생성 오류");
         }
     }
+
     private void CreateGenres()
     {
-        int id = GameManager.instance.char_id;
-        //genre insert
         List<string> genre_name = new List<string>()
         {
-            "'동물'", "'뷰티'", "'교육'", "'연예'", "'금융'", "'음식'", "'게임'", "'건강'", "'정치'", "'쇼핑'"
+            "동물", "뷰티", "교육", "연예", "금융", "음식", "게임", "건강", "정치", "쇼핑"
         };
 
-        for(int i = 0; i < genre_name.Count; i++)
+        for (int i = 0; i < genre_name.Count; i++)
         {
-            m_DatabaseAccess.InsertIntoSpecific("genre", new string[] { "name", "char_id" }, new string[] { genre_name[i], id.ToString() });
+            GameManager.instance.genre.Add(genre_name[i], 0);
         }
 
-        //small_genre insert;
-        SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT id FROM genre WHERE char_id = '" + id.ToString() + "'");
-
-        List<List<string>> s_genre = new List<List<string>>();
-        int row = 0;
-
-        while(reader.Read())
+        List<List<string>> sgenre_name = new List<List<string>>()
         {
-            string genre_id = reader["id"].ToString();
-            
-            switch(row)
+            new List<string> { "동물 입양", "동물 관리법", "동물 의료", "동물 보호 활동", "잘못된 동물 입양", "잘못된 동물 관리법", "동물 학대" },
+            new List<string> {"화장품 성분 분석", "메이크업 팁", "피부 관리법", "잘못된 피부 관리법", "무분별한 화장품 홍보", "성형 조장" },
+            new List<string> {"학습 습관", "교육 정보", "강의", "잘못된 강의" },
+            new List<string> {"드라마 및 영화", "예능", "음악", "연예 찌라시", "폭력적 미디어" },
+            new List<string> {"금융 상식", "돈 관리", "투자 전략", "불법적 투자 방법", "위험한 금융 정보", "무분별한 기업 홍보" },
+            new List<string> {"영양 정보", "요리법", "음식 리뷰", "과식 유도", "무분별한 광고 리뷰" },
+            new List<string> {"게임 소개", "게임 팁", "게임 플레이 감상", "불법 도박 게임", "폭력적 게임" },
+            new List<string> {"운동 방법", "건강 정보", "위험한 다이어트", "잘못된 운동법" },
+            new List<string> {"정치 이슈 분석", "정치 뉴스", "정치 관련 강의", "편향된 정치 사고", "가짜 뉴스" },
+            new List<string> {"제품 리뷰", "할인 정보", "구매 가이드", "무분별한 제품 홍보", "과소비 유도" }
+        };
+
+        List<List<int>> pos_neg = new List<List<int>>()
+        {
+            new List<int> { 0, 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> {0, 0, 0, 1, 1 }
+        };
+
+        List<Hashtable> s_gen = new List<Hashtable>();
+
+        if (prefers.Count == sgenre_name.Count)
+        {
+            for(int i = 0; i < prefers.Count; i++)
             {
-                case 0: //동물
-                    s_genre.Add(new List<string> { "'동물 입양'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'동물 관리법'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'동물 의료'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'동물 보호 활동'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'잘못된 동물 입양'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'잘못된 동물 관리법'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'동물 학대'", "1", genre_id });
-                    break;
-                case 1: //뷰티
-                    s_genre.Add(new List<string> { "'화장품 성분 분석'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'메이크업 팁'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'피부 관리법'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'잘못된 피부 관리법'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'무분별한 화장품 홍보'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'성형 조장'", "1", genre_id });
-                    break;
-                case 2: //교육
-                    s_genre.Add(new List<string> { "'학습 습관'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'교육 정보'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'강의'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'잘못된 강의'", "1", genre_id });
-                    break;
-                case 3: //연예
-                    s_genre.Add(new List<string> { "'드라마 및 영화'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'예능'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'음악'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'연예 찌라시'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'폭력적 미디어'", "1", genre_id });
-                    break;
-                case 4: //금융
-                    s_genre.Add(new List<string> { "'금융 상식'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'돈 관리'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'투자 전략'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'불법적 투자 방법'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'위험한 금융 정보'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'무분별한 기업 홍보'", "1", genre_id });
-                    break;
-                case 5: //음식
-                    s_genre.Add(new List<string> { "'영양 정보'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'요리법'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'음식 리뷰'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'과식 유도'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'무분별한 광고 리뷰'", "1", genre_id });
-                    break;
-                case 6: //게임
-                    s_genre.Add(new List<string> { "'게임 소개'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'게임 팁'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'게임 플레이 감상'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'불법 도박 게임'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'폭력적 게임'", "1", genre_id });
-                    break;
-                case 7: //건강
-                    s_genre.Add(new List<string> { "'운동 방법'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'건강 정보'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'위험한 다이어트'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'잘못된 운동법'", "1", genre_id });
-                    break;
-                case 8: //정치
-                    s_genre.Add(new List<string> { "'정치 이슈 분석'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'정치 뉴스'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'정치 관련 강의'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'편향된 정치 사고'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'가짜 뉴스'", "1", genre_id });
-                    break;
-                case 9: //쇼핑
-                    s_genre.Add(new List<string> { "'제품 리뷰'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'할인 정보'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'구매 가이드'", "0", genre_id });
-                    s_genre.Add(new List<string> { "'무분별한 제품 홍보'", "1", genre_id });
-                    s_genre.Add(new List<string> { "'과소비 유도'", "1", genre_id });
-                    break;
+                int interest = 0; //대장르 구분에 따라 흥미도 설정
+                if (prefers[i].isOn)
+                {
+                    interest = 10;
+                }
+
+                for(int j = 0; j < sgenre_name[i].Count; j++) //j는 대장르 구분 키
+                {
+                    s_gen.Add(new Hashtable());
+                    string sgen_name = sgenre_name[i][j];
+                    int sgen_pn = pos_neg[i][j];
+
+                    int num = s_gen.Count - 1;
+                    s_gen[num].Add("name", sgen_name);
+                    s_gen[num].Add("pos_neg", sgen_pn);
+                    s_gen[num].Add("genre_id", i); //저장 시에 genre_id는 별도 검색 후 입력 필요 
+                    s_gen[num].Add("interest", interest);
+                    s_gen[num].Add("count", 0);
+                    s_gen[num].Add("length", 0);
+                }
             }
-            row++;
         }
 
-        for (int i = 0; i < s_genre.Count; i++)
-        {
-            List<string> list = s_genre[i];
-            
-            m_DatabaseAccess.InsertIntoSpecific("small_genre", new string[] { "name", "pos_neg", "genre_id" }, list.ToArray());
-        }
-
-        UpdateGenreInterest();
+        GameManager.instance.small_genre = s_gen;
     }
 
     private void CreateProperties()
     {
-        int id = GameManager.instance.char_id;
-
         List<string> property_name = new List<string>()
         {
-            "'건강'", "'중독'", "'스트레스'", "'재미'", "'자존감'", "'폭력성'", "'인지평향'", "'허영심'"
-        };
-
-        for (int i = 0; i < property_name.Count; i++)
-        {
-            m_DatabaseAccess.InsertIntoSpecific("property", new string[] { "name", "char_id" }, new string[] { property_name[i], id.ToString() });
-        }
-
-        UpdatePropertyStat();
-    }
-
-    private void UpdateGenreInterest()
-    {
-        int id = GameManager.instance.char_id;
-
-        SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT id FROM genre WHERE char_id = '" + id.ToString() + "'");
-
-        int row = 0;
-        while (reader.Read())
-        {
-            string genre_id = reader["id"].ToString();
-
-            int interest = 0;
-
-            if (prefers[row].isOn)
-            {
-                interest = 10;
-            }
-
-            m_DatabaseAccess.UpdateInto("small_genre", new string[] { "interest" }, new string[] { interest.ToString() }, "genre_id", genre_id);
-
-            row++;
-        }
-    }
-
-    private void UpdatePropertyStat()
-    {
-        int id = GameManager.instance.char_id;
-
-        List<string> property_name = new List<string>()
-        {
-            "'건강'", "'중독'", "'스트레스'", "'재미'", "'자존감'", "'폭력성'", "'인지평향'", "'허영심'"
+            "건강", "중독", "스트레스", "재미", "자존감", "폭력성", "인지평향", "허영심"
         };
 
         for (int i = 0; i < properties.Count; i++)
@@ -324,14 +243,16 @@ public class CharacterCreateButton : MonoBehaviour
             {
                 if (!properties[i].isOn)
                 {
-                    if(i == 0 || i == 3 || i == 4)
+                    if (i == 0 || i == 3 || i == 4)
                     {
                         stat = 80;
-                    } else
+                    }
+                    else
                     {
                         stat = 20;
                     }
-                } else
+                }
+                else
                 {
                     if (i == 0 || i == 3 || i == 4)
                     {
@@ -344,8 +265,7 @@ public class CharacterCreateButton : MonoBehaviour
                 }
             }
 
-            m_DatabaseAccess.UpdateWhere("property", new string[] { "stat" }, new string[] { stat.ToString() }, new string[] { "char_id", "name" }, new string[] { id.ToString(), property_name[i] });
+            GameManager.instance.property.Add(property_name[i], stat);
         }
     }
-
 }

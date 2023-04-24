@@ -9,6 +9,9 @@ public class ButtonOnKeyboard : MonoBehaviour
     public GameObject sign;
     public string btn_name;
 
+    public GameObject ui;
+    public GameObject tab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,31 +26,33 @@ public class ButtonOnKeyboard : MonoBehaviour
 
     public void OnMouseOver()
     {
-        sign.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        if (ui.activeSelf == false)
+        {
+            sign.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        }
     }
 
     public void OnMouseExit()
     {
-        sign.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        if (ui.activeSelf == false)
+        {
+            sign.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        }
     }
 
     public void OnMouseDown()
     {
-        if(btn_name == "start")
+        if (ui.activeSelf == false)
         {
-            SceneManager.LoadScene("Prologue");
-        } else if(btn_name == "continue")
-        {
-            //좌측 메뉴 바 없애기
-            GameObject obj = GameObject.Find("MenuBar");
-            obj.SetActive(false);
-            //저장 파일 출력 탭 활성화
-        } else if(btn_name == "endings")
-        {
-            //엔딩 갤러리 씬 연결
-        } else if(btn_name == "quit")
-        {
-            //종료하시겠습니까? 탭 활성화
+            if (btn_name == "start")
+            {
+                SceneManager.LoadScene("Prologue");
+            }
+            else
+            {
+                ui.SetActive(true);
+                tab.SetActive(true);
+            }
         }
     }
 }
