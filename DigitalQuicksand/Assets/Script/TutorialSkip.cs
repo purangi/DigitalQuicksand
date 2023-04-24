@@ -30,7 +30,7 @@ public class TutorialSkip : MonoBehaviour
             
     }
 
-    void SkipTutorial()
+    public void SkipTutorial()
     {
         SceneManager.LoadScene("CharacterCreation");
     }
