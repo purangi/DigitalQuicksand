@@ -61,7 +61,7 @@ public class CharacterCreateButton : MonoBehaviour
         } else
         {
             CharacterCreate();
-            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene("MainBasic");
         }
     }
     private bool CheckName()
