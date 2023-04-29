@@ -8400,6 +8400,7 @@ GameObject:
   - component: {fileID: 1978433747}
   - component: {fileID: 1978433746}
   - component: {fileID: 1978433749}
+  - component: {fileID: 1978433750}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -8529,6 +8530,21 @@ MonoBehaviour:
   btn_num: 0
   bg: {fileID: 0}
   ui: {fileID: 0}
+--- !u!114 &1978433750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978433744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1982420387
 GameObject:
   m_ObjectHideFlags: 0

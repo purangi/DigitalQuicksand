@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using System.IO;
-using Mono.Data.Sqlite;
 
 public class CharacterCreateButton : MonoBehaviour
 {
@@ -19,17 +18,11 @@ public class CharacterCreateButton : MonoBehaviour
     private List<Toggle> prefers = new List<Toggle>();
     private List<Toggle> properties = new List<Toggle>();
 
-    public string m_DatabaseFileName = "save.db";
-
-    private DBAccess m_DatabaseAccess;
     private ShowPopUp popup_script;
 
     // Start is called before the first frame update
     void Start()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, m_DatabaseFileName);
-        Debug.Log(filePath);
-        m_DatabaseAccess = new DBAccess("data source = " + filePath);
         popup_script = Popup.GetComponent<ShowPopUp>();
 
         Toggle[] preferToggles = Preference.GetComponentsInChildren<Toggle>();
@@ -129,7 +122,7 @@ public class CharacterCreateButton : MonoBehaviour
     {
         try
         {
-            string name = "'" + NameInput.text + "'";
+            string name = NameInput.text;
 
             int gender = 0;
 
@@ -138,15 +131,8 @@ public class CharacterCreateButton : MonoBehaviour
                 gender = 1;
             }
 
-            m_DatabaseAccess.InsertIntoSpecific("character", new string[] { "full_name", "gender" }, new string[] { name, gender.ToString() });
-
-            SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT id FROM character WHERE full_name = " + name + " ORDER BY ROWID DESC LIMIT 1");
-            reader.Read();
-
-            string id_s = reader["id"].ToString();
-
-            GameManager.instance.char_id = Int32.Parse(id_s);
             GameManager.instance.char_name = NameInput.text;
+            GameManager.instance.gender = gender;
 
             CreateGenres();
             CreateProperties();
