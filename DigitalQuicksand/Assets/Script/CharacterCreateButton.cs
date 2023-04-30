@@ -136,14 +136,15 @@ public class CharacterCreateButton : MonoBehaviour
 
             CreateGenres();
             CreateProperties();
-        } catch
+        } catch(Exception e)
         {
-            Debug.Log("캐릭터 생성 오류");
+            Debug.Log(e);
         }
     }
 
     private void CreateGenres()
     {
+        Dictionary<string, int> dic = new Dictionary<string, int>();
         List<string> genre_name = new List<string>()
         {
             "동물", "뷰티", "교육", "연예", "금융", "음식", "게임", "건강", "정치", "쇼핑"
@@ -151,8 +152,10 @@ public class CharacterCreateButton : MonoBehaviour
 
         for (int i = 0; i < genre_name.Count; i++)
         {
-            GameManager.instance.genre.Add(genre_name[i], 0);
+            dic.Add(genre_name[i], 0);
         }
+
+        GameManager.instance.genre = dic;
 
         List<List<string>> sgenre_name = new List<List<string>>()
         {
@@ -176,10 +179,10 @@ public class CharacterCreateButton : MonoBehaviour
             new List<int> { 0, 0, 0, 1, 1 },
             new List<int> { 0, 0, 0, 1, 1, 1 },
             new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
             new List<int> { 0, 0, 1, 1 },
             new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> {0, 0, 0, 1, 1 }
+            new List<int> { 0, 0, 0, 1, 1 }
         };
 
         List<Hashtable> s_gen = new List<Hashtable>();
@@ -216,6 +219,8 @@ public class CharacterCreateButton : MonoBehaviour
 
     private void CreateProperties()
     {
+        Dictionary<string, int> dic = new Dictionary<string, int>();
+
         List<string> property_name = new List<string>()
         {
             "건강", "중독", "스트레스", "재미", "자존감", "폭력성", "인지평향", "허영심"
@@ -251,7 +256,9 @@ public class CharacterCreateButton : MonoBehaviour
                 }
             }
 
-            GameManager.instance.property.Add(property_name[i], stat);
+            dic.Add(property_name[i], stat);
         }
+
+        GameManager.instance.property = dic;
     }
 }
