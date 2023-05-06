@@ -59,46 +59,44 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     private void UpdateGenres()
     {
-        Dictionary<string, int> genre = new Dictionary<string, int>();
-        List<Hashtable> small_genre = new List<Hashtable>();
+        Dictionary<int, int> genre = new Dictionary<int, int>();
+        List<Hashtable> s_gen = new List<Hashtable>();
 
-        SqliteDataReader reader = m_DatabaseAccess.SelectWhere("genre", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
+        SqliteDataReader reader = m_DatabaseAccess.SelectWhere("char_g", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
 
         while(reader.Read())
         {
-            string name = reader["name"].ToString();
+            int name = Int32.Parse(reader["genre_id"].ToString());
             int skill = Int32.Parse(reader["skill"].ToString());
             genre.Add(name, skill);
+        }
 
-            SqliteDataReader s_reader = m_DatabaseAccess.SelectWhere("small_genre", new string[] { "*" }, new string[] { "genre_id" }, new string[] { "=" }, new string[] { reader["id"].ToString() });
+        SqliteDataReader s_reader = m_DatabaseAccess.SelectWhere("char_sg", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
 
-            while (s_reader.Read())
-            {
-                small_genre.Add(new Hashtable());
-                int i = small_genre.Count - 1;
+        while (s_reader.Read())
+        {
+            s_gen.Add(new Hashtable());
+            int num = s_gen.Count - 1;
 
-                small_genre[i].Add("name", s_reader["name"].ToString());
-                small_genre[i].Add("pos_neg", Int32.Parse(s_reader["pos_neg"].ToString()));
-                small_genre[i].Add("genre_id", Int32.Parse(s_reader["genre_id"].ToString())); //저장 시에 genre_id는 별도 검색 후 입력 필요 
-                small_genre[i].Add("interest", Int32.Parse(s_reader["interest"].ToString()));
-                small_genre[i].Add("count", Int32.Parse(s_reader["count"].ToString()));
-                small_genre[i].Add("length", Int32.Parse(s_reader["length"].ToString()));
-            }
+            s_gen[num].Add("sgenre_id", Int32.Parse(s_reader["sgenre_id"].ToString()));
+            s_gen[num].Add("interest", Int32.Parse(s_reader["interest"].ToString()));
+            s_gen[num].Add("count", Int32.Parse(s_reader["count"].ToString()));
+            s_gen[num].Add("length", Int32.Parse(s_reader["length"].ToString()));
         }
 
         GameManager.instance.genre = genre;
-        GameManager.instance.small_genre = small_genre;
+        GameManager.instance.small_genre = s_gen;
     }
 
     private void UpdateProperties()
     {
-        Dictionary<string, int> property = new Dictionary<string, int>();
+        Dictionary<int, int> property = new Dictionary<int, int>();
 
-        SqliteDataReader reader = m_DatabaseAccess.SelectWhere("property", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
+        SqliteDataReader reader = m_DatabaseAccess.SelectWhere("char_p", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
 
         while(reader.Read())
         {
-            property.Add(reader["name"].ToString(), Int32.Parse(reader["stat"].ToString()));
+            property.Add(Int32.Parse(reader["property_id"].ToString()), Int32.Parse(reader["stat"].ToString()));
         }
 
         GameManager.instance.property = property;

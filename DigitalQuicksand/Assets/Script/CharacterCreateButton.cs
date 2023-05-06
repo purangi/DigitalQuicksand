@@ -144,19 +144,22 @@ public class CharacterCreateButton : MonoBehaviour
 
     private void CreateGenres()
     {
-        Dictionary<string, int> dic = new Dictionary<string, int>();
+        Dictionary<int, int> genre = new Dictionary<int, int>();
+        /*
         List<string> genre_name = new List<string>()
         {
             "동물", "뷰티", "교육", "연예", "금융", "음식", "게임", "건강", "정치", "쇼핑"
         };
+        */
 
-        for (int i = 0; i < genre_name.Count; i++)
+        for (int i = 0; i < 10; i++)
         {
-            dic.Add(genre_name[i], 0);
+            genre.Add(i + 1, 0);
         }
 
-        GameManager.instance.genre = dic;
+        GameManager.instance.genre = genre;
 
+        /*
         List<List<string>> sgenre_name = new List<List<string>>()
         {
             new List<string> { "동물 입양", "동물 관리법", "동물 의료", "동물 보호 활동", "잘못된 동물 입양", "잘못된 동물 관리법", "동물 학대" },
@@ -184,10 +187,25 @@ public class CharacterCreateButton : MonoBehaviour
             new List<int> { 0, 0, 0, 1, 1 },
             new List<int> { 0, 0, 0, 1, 1 }
         };
+        */
+
+        List<List<int>> dump = new List<List<int>>() //대장르 구분을 위함
+        {
+            new List<int> { 0, 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 },
+            new List<int> { 0, 0, 0, 1, 1 }
+        };
 
         List<Hashtable> s_gen = new List<Hashtable>();
 
-        if (prefers.Count == sgenre_name.Count)
+        if (prefers.Count == dump.Count)
         {
             for(int i = 0; i < prefers.Count; i++)
             {
@@ -197,16 +215,16 @@ public class CharacterCreateButton : MonoBehaviour
                     interest = 10;
                 }
 
-                for(int j = 0; j < sgenre_name[i].Count; j++) //j는 대장르 구분 키
+                for(int j = 0; j < dump[i].Count; j++) //j는 대장르 구분 키
                 {
                     s_gen.Add(new Hashtable());
-                    string sgen_name = sgenre_name[i][j];
-                    int sgen_pn = pos_neg[i][j];
+                    //string sgen_name = sgenre_name[i][j];
+                    //int sgen_pn = pos_neg[i][j];
 
                     int num = s_gen.Count - 1;
-                    s_gen[num].Add("name", sgen_name);
-                    s_gen[num].Add("pos_neg", sgen_pn);
-                    s_gen[num].Add("genre_id", i); //저장 시에 genre_id는 별도 검색 후 입력 필요 
+                    //s_gen[num].Add("name", sgen_name);
+                    //s_gen[num].Add("pos_neg", sgen_pn);
+                    s_gen[num].Add("sgenre_id", num + 1);
                     s_gen[num].Add("interest", interest);
                     s_gen[num].Add("count", 0);
                     s_gen[num].Add("length", 0);
@@ -219,12 +237,13 @@ public class CharacterCreateButton : MonoBehaviour
 
     private void CreateProperties()
     {
-        Dictionary<string, int> dic = new Dictionary<string, int>();
+        Dictionary<int, int> dic = new Dictionary<int, int>();
 
+        /*
         List<string> property_name = new List<string>()
         {
             "건강", "중독", "스트레스", "재미", "자존감", "폭력성", "인지평향", "허영심"
-        };
+        }; */
 
         for (int i = 0; i < properties.Count; i++)
         {
@@ -256,7 +275,7 @@ public class CharacterCreateButton : MonoBehaviour
                 }
             }
 
-            dic.Add(property_name[i], stat);
+            dic.Add(i + 1, stat);
         }
 
         GameManager.instance.property = dic;
