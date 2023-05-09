@@ -251,7 +251,7 @@ public class CharacterCreateButton : MonoBehaviour
 
             if (properties[i].interactable)
             {
-                if (!properties[i].isOn)
+                if(!properties[i].isOn)
                 {
                     if (i == 0 || i == 3 || i == 4)
                     {
