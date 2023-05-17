@@ -1088,7 +1088,7 @@ MonoBehaviour:
   Preference: {fileID: 1260215123}
   Property: {fileID: 1045699702}
   Popup: {fileID: 1705576301}
-  m_DatabaseFileName: save.db
+  scene_name: MainScene
 --- !u!1 &550374928
 GameObject:
   m_ObjectHideFlags: 0

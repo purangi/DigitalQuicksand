@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using System.IO;
+using Mono.Data.Sqlite;
+using MyDB;
 
 public class CharacterCreateButton : MonoBehaviour
 {
@@ -14,15 +16,22 @@ public class CharacterCreateButton : MonoBehaviour
     public GameObject Preference;
     public GameObject Property;
     public GameObject Popup;
+    public string scene_name;
 
     private List<Toggle> prefers = new List<Toggle>();
     private List<Toggle> properties = new List<Toggle>();
+
+    private DBAccess m_DatabaseAccess;
 
     private ShowPopUp popup_script;
 
     // Start is called before the first frame update
     void Start()
     {
+        string filePath = Path.Combine(Application.streamingAssetsPath, "save.db");
+        Debug.Log(filePath);
+        m_DatabaseAccess = new DBAccess("data source = " + filePath);
+
         popup_script = Popup.GetComponent<ShowPopUp>();
 
         Toggle[] preferToggles = Preference.GetComponentsInChildren<Toggle>();
@@ -61,7 +70,7 @@ public class CharacterCreateButton : MonoBehaviour
         } else
         {
             CharacterCreate();
-            SceneManager.LoadScene("MainBasic");
+            SceneManager.LoadScene(scene_name);
         }
     }
     private bool CheckName()
@@ -145,12 +154,6 @@ public class CharacterCreateButton : MonoBehaviour
     private void CreateGenres()
     {
         Dictionary<int, int> genre = new Dictionary<int, int>();
-        /*
-        List<string> genre_name = new List<string>()
-        {
-            "동물", "뷰티", "교육", "연예", "금융", "음식", "게임", "건강", "정치", "쇼핑"
-        };
-        */
 
         for (int i = 0; i < 10; i++)
         {
@@ -159,77 +162,23 @@ public class CharacterCreateButton : MonoBehaviour
 
         GameManager.instance.genre = genre;
 
-        /*
-        List<List<string>> sgenre_name = new List<List<string>>()
-        {
-            new List<string> { "동물 입양", "동물 관리법", "동물 의료", "동물 보호 활동", "잘못된 동물 입양", "잘못된 동물 관리법", "동물 학대" },
-            new List<string> {"화장품 성분 분석", "메이크업 팁", "피부 관리법", "잘못된 피부 관리법", "무분별한 화장품 홍보", "성형 조장" },
-            new List<string> {"학습 습관", "교육 정보", "강의", "잘못된 강의" },
-            new List<string> {"드라마 및 영화", "예능", "음악", "연예 찌라시", "폭력적 미디어" },
-            new List<string> {"금융 상식", "돈 관리", "투자 전략", "불법적 투자 방법", "위험한 금융 정보", "무분별한 기업 홍보" },
-            new List<string> {"영양 정보", "요리법", "음식 리뷰", "과식 유도", "무분별한 광고 리뷰" },
-            new List<string> {"게임 소개", "게임 팁", "게임 플레이 감상", "불법 도박 게임", "폭력적 게임" },
-            new List<string> {"운동 방법", "건강 정보", "위험한 다이어트", "잘못된 운동법" },
-            new List<string> {"정치 이슈 분석", "정치 뉴스", "정치 관련 강의", "편향된 정치 사고", "가짜 뉴스" },
-            new List<string> {"제품 리뷰", "할인 정보", "구매 가이드", "무분별한 제품 홍보", "과소비 유도" }
-        };
+        List<SmallGenre> s_gen = new List<SmallGenre>();
 
-        List<List<int>> pos_neg = new List<List<int>>()
+        SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT id, genre_id FROM small_genre");
+        
+        while(reader.Read())
         {
-            new List<int> { 0, 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 }
-        };
-        */
-
-        List<List<int>> dump = new List<List<int>>() //대장르 구분을 위함
-        {
-            new List<int> { 0, 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 },
-            new List<int> { 0, 0, 0, 1, 1 }
-        };
-
-        List<Hashtable> s_gen = new List<Hashtable>();
-
-        if (prefers.Count == dump.Count)
-        {
-            for(int i = 0; i < prefers.Count; i++)
+            int id = Int32.Parse(reader["id"].ToString());
+            int genre_id = Int32.Parse(reader["genre_id"].ToString());
+            
+            int interest = 0;
+            if (prefers[genre_id -1].isOn)
             {
-                int interest = 0; //대장르 구분에 따라 흥미도 설정
-                if (prefers[i].isOn)
-                {
-                    interest = 10;
-                }
-
-                for(int j = 0; j < dump[i].Count; j++) //j는 대장르 구분 키
-                {
-                    s_gen.Add(new Hashtable());
-                    //string sgen_name = sgenre_name[i][j];
-                    //int sgen_pn = pos_neg[i][j];
-
-                    int num = s_gen.Count - 1;
-                    //s_gen[num].Add("name", sgen_name);
-                    //s_gen[num].Add("pos_neg", sgen_pn);
-                    s_gen[num].Add("sgenre_id", num + 1);
-                    s_gen[num].Add("interest", interest);
-                    s_gen[num].Add("count", 0);
-                    s_gen[num].Add("length", 0);
-                }
+                interest = 10;
             }
+
+            SmallGenre item = new SmallGenre(id, interest, 0, 0);
+            s_gen.Add(item);
         }
 
         GameManager.instance.small_genre = s_gen;

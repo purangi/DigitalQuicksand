@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 using Mono.Data.Sqlite;
+using MyDB;
 
 public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -60,7 +61,7 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
     private void UpdateGenres()
     {
         Dictionary<int, int> genre = new Dictionary<int, int>();
-        List<Hashtable> s_gen = new List<Hashtable>();
+        List<SmallGenre> s_gen = new List<SmallGenre>();
 
         SqliteDataReader reader = m_DatabaseAccess.SelectWhere("char_g", new string[] { "*" }, new string[] { "char_id" }, new string[] { "=" }, new string[] { char_id.ToString() });
 
@@ -75,17 +76,17 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
         while (s_reader.Read())
         {
-            s_gen.Add(new Hashtable());
-            int num = s_gen.Count - 1;
+            int id = Int32.Parse(s_reader["sgenre_id"].ToString());
+            int interest = Int32.Parse(s_reader["interest"].ToString());
+            int count = Int32.Parse(s_reader["count"].ToString());
+            int length = Int32.Parse(s_reader["length"].ToString());
 
-            s_gen[num].Add("sgenre_id", Int32.Parse(s_reader["sgenre_id"].ToString()));
-            s_gen[num].Add("interest", Int32.Parse(s_reader["interest"].ToString()));
-            s_gen[num].Add("count", Int32.Parse(s_reader["count"].ToString()));
-            s_gen[num].Add("length", Int32.Parse(s_reader["length"].ToString()));
+            s_gen.Add(new SmallGenre(id, interest, count, length));
         }
 
         GameManager.instance.genre = genre;
         GameManager.instance.small_genre = s_gen;
+
     }
 
     private void UpdateProperties()

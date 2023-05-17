@@ -6,6 +6,7 @@ public class VideoMaker : MonoBehaviour
 {
     public GameObject video;
     public GameObject parent;
+    public Texture[] Images;
 
     // Start is called before the first frame update
     void Start()

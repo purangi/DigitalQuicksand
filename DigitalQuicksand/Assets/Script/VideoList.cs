@@ -1,14 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
+using System.IO;
+using System.Linq;
+using Mono.Data.Sqlite;
+using MyDB;
 
 public class VideoList : MonoBehaviour
 {
+    private DBAccess m_DatabaseAccess;
+    private List<int> top_sgid = new List<int>();
+
+    private int min_interest = 0;
+    private int min_count = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        string filePath = Path.Combine(Application.streamingAssetsPath, "save.db");
+        m_DatabaseAccess = new DBAccess("data source = " + filePath);
+
+        RecommendVideo();
     }
 
     // Update is called once per frame
@@ -17,31 +32,106 @@ public class VideoList : MonoBehaviour
         
     }
 
-    public void Video()
+    public void RecommendVideo()
     {
-        List<Hashtable> video = new List<Hashtable>();
+        //소장르 interest 내림차순으로 검색 -> 동일하면 count 내림차순 검색 -> 1번 장르 5개 2,3번 장르 각 3개, 4,5번장르 최소 1개씩
+        //1-2-3 동률일 때는 각 4개씩, 나머지 3개는 하위 중 랜덤 선택
+        CheckInterest();
+        SearchTopInterest();
+    }
 
-        List<List<string>> videolist = new List<List<string>>()
+    private void CheckInterest() 
+    {
+        List<SmallGenre> sg_list = GameManager.instance.small_genre;
+
+        List<SmallGenre> sg = sg_list.OrderByDescending(x => x.Interest).ToList();
+
+        var query = sg.GroupBy(x => x.Interest); //groupby 쿼리
+
+        int sg_num = 0;
+
+        foreach(var group in query)
         {
-            new List<string> { "장르", "제목", "요약", "길이(int 변환 필요)", "특성", "특성수치(int)", "기술", "기술수치(int)" }
-        };
+            List<SmallGenre> temp_list = new List<SmallGenre>();
 
-        for (int i = 0; i < videolist.Count; i++)
-        {
-            List<string> list = videolist[i];
+            foreach(var item in group)
+            {
+                temp_list.Add(new SmallGenre(item.Sgenre_id, item.Interest, item.Count, item.Length));
+            }
 
-            video.Add(new Hashtable());
+            List<SmallGenre> temp = temp_list.OrderByDescending(x => x.Count).ToList();
 
-            int count = video.Count;
+            if (sg_num + temp.Count > 5)
+            {
+                Debug.Log("sg_num + temp.Count > 5");
 
-            video[count - 1].Add("genre", list[0]);
-            video[count - 1].Add("title", list[1]);
-            video[count - 1].Add("summary", list[2]);
-            video[count - 1].Add("length", Int32.Parse(list[3]));
-            video[count - 1].Add("p_stat", list[4]);
-            video[count - 1].Add("p_amount", Int32.Parse(list[5]));
-            video[count - 1].Add("s_stat", list[6]);
-            video[count - 1].Add("s_amount", Int32.Parse(list[7]));
+                var query2 = temp.GroupBy(x => x.Count);
+
+                foreach (var group2 in query2)
+                {
+                    List<SmallGenre> temp2 = new List<SmallGenre>();
+
+                    foreach (var item in group2)
+                    {
+                        temp2.Add(new SmallGenre(item.Sgenre_id, item.Interest, item.Count, item.Length));
+                    }
+
+                    if(sg_num + temp2.Count > 5)
+                    {
+                        SmallGenre last = temp2.Last();
+                        min_interest = last.Interest;
+                        min_count = last.Count;
+                    } else
+                    {
+                        sg_num += temp2.Count;
+                    }
+                }
+            } else
+            {
+                Debug.Log("sg_num + temp.Count <= 5");
+                sg_num += temp.Count;
+            }
         }
+
+        Debug.Log(min_count + ", " + min_interest);
+    }
+
+    private void SearchTopInterest()
+    {
+        //소장르들 중에 선택 개수 정해야됨
+        List<SmallGenre> sg_list = GameManager.instance.small_genre;
+
+        List<int> need_random = new List<int>();
+
+        for(int i = 0; i < sg_list.Count; i++)
+        {
+            if (sg_list[i].Interest > min_interest)
+            {
+                //전부 삽입
+                top_sgid.Add(sg_list[i].Sgenre_id);
+                Debug.Log(i + "삽입됨");
+            } else if (sg_list[i].Interest == min_interest)
+            {
+                if (sg_list[i].Count > min_count)
+                {
+                    //전부 삽입
+                    top_sgid.Add(sg_list[i].Sgenre_id);
+                    Debug.Log(i + "삽입됨");
+                } else if (sg_list[i].Count == min_count)
+                {
+                    //랜덤 삽입
+                    need_random.Add(sg_list[i].Sgenre_id);
+                }
+            }
+        }
+
+        if(top_sgid.Count < 5)
+        {
+            int num = 5 - top_sgid.Count;
+
+            need_random.OrderBy(g => Guid.NewGuid()).Take(num).ToList().ForEach(x => top_sgid.Add(x));
+        }
+
+        Debug.Log("id 뽑은 개수 " + top_sgid.Count);
     }
 }

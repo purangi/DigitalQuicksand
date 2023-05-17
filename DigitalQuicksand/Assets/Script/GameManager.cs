@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyDB;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,13 +10,12 @@ public class GameManager : MonoBehaviour
     public int char_id; //파일 저장 시&저장된 파일 불러올 때 사용, 첫 생성 시에는 삽입 후 검색해와서 쓰기
     public int gender;
     public int week = 1;
+    public int gold;
     public string char_name;
 
     public Dictionary<int, int> genre; //genre_id, skill
-    public List<Hashtable> small_genre; //Hashtable 구성(name, pos_neg, genre_id, interest, count, length)
+    public List<SmallGenre> small_genre;
     public Dictionary<int, int> property; //property_id, stat
-
-    public List<Hashtable> video;
 
     void Awake()
     {
