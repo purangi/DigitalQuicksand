@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public List<SmallGenre> small_genre;
     public Dictionary<int, int> property; //property_id, stat
 
-    void Awake()
+    /*void Awake()
     {
         if(instance == null)
         {
@@ -28,5 +28,18 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(instance);
+    }
+    */
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 }
