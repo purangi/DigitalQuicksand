@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 6115750838744116951}
   - component: {fileID: 2334873427510746093}
   - component: {fileID: 4990497635273535570}
+  - component: {fileID: 1264990780320151645}
   m_Layer: 5
   m_Name: Video
   m_TagString: Untagged
@@ -394,6 +395,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1264990780320151645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510017970597642536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9de763b52077a4d92ad5a26877f386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thumb: {fileID: 6716561104275896573}
+  title: {fileID: 1501781096491779703}
+  summary: {fileID: 9023777747479549681}
+  id: 0
 --- !u!1 &5542142790392821019
 GameObject:
   m_ObjectHideFlags: 0

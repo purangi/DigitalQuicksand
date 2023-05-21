@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,10 @@ using MyDB;
 
 public class VideoList : MonoBehaviour
 {
+    public GameObject video;
+    public GameObject parent;
+    public Sprite[] Images;
+
     private DBAccess m_DatabaseAccess;
     private List<int> top_sgid = new List<int>();
 
@@ -63,8 +68,6 @@ public class VideoList : MonoBehaviour
 
             if (sg_num + temp.Count > 5)
             {
-                Debug.Log("sg_num + temp.Count > 5");
-
                 var query2 = temp.GroupBy(x => x.Count);
 
                 foreach (var group2 in query2)
@@ -81,19 +84,20 @@ public class VideoList : MonoBehaviour
                         SmallGenre last = temp2.Last();
                         min_interest = last.Interest;
                         min_count = last.Count;
+
+                        break;
                     } else
                     {
                         sg_num += temp2.Count;
                     }
                 }
+
+                break;
             } else
             {
-                Debug.Log("sg_num + temp.Count <= 5");
                 sg_num += temp.Count;
             }
         }
-
-        Debug.Log(min_count + ", " + min_interest);
     }
 
     private void SearchTopInterest()
@@ -109,18 +113,23 @@ public class VideoList : MonoBehaviour
             {
                 //ÀüºÎ »ðÀÔ
                 top_sgid.Add(sg_list[i].Sgenre_id);
-                Debug.Log(i + "»ðÀÔµÊ");
             } else if (sg_list[i].Interest == min_interest)
             {
-                if (sg_list[i].Count > min_count)
+                if (top_sgid.Count > 5)
                 {
-                    //ÀüºÎ »ðÀÔ
-                    top_sgid.Add(sg_list[i].Sgenre_id);
-                    Debug.Log(i + "»ðÀÔµÊ");
-                } else if (sg_list[i].Count == min_count)
+                    break;
+                } else
                 {
-                    //·£´ý »ðÀÔ
-                    need_random.Add(sg_list[i].Sgenre_id);
+                    if (sg_list[i].Count > min_count)
+                    {
+                        //ÀüºÎ »ðÀÔ
+                        top_sgid.Add(sg_list[i].Sgenre_id);
+                    }
+                    else if (sg_list[i].Count == min_count)
+                    {
+                        //·£´ý »ðÀÔ
+                        need_random.Add(sg_list[i].Sgenre_id);
+                    }
                 }
             }
         }
@@ -133,5 +142,47 @@ public class VideoList : MonoBehaviour
         }
 
         Debug.Log("id »ÌÀº °³¼ö " + top_sgid.Count);
+
+        SearchVideo();
+    }
+
+    private void SearchVideo()
+    {
+        //db¿¡¼­ ¼­Ä¡
+        List<Video> temp_list = new List<Video>();
+
+        for(int i = 0; i < top_sgid.Count; i++)
+        {
+            SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT * FROM video WHERE sg_id = " + top_sgid[i] + " OR sg_id2 = " + top_sgid[i]);
+            
+            while(reader.Read())
+            {
+                Video item = new Video(Int32.Parse(reader["id"].ToString()), reader["title"].ToString(), reader["summary"].ToString());
+                temp_list.Add(item);
+            }
+        }
+
+        List<Video> video_list = temp_list.OrderBy(g => Guid.NewGuid()).Take(15).ToList();
+
+        for(int i = 0; i < video_list.Count; i++)
+        {
+            generateVideo(video_list[i].Video_id, video_list[i].Title, video_list[i].Summary);
+        }
+    }
+
+    private void generateVideo(int id, string title, string summary)
+    {
+        GameObject temp = Instantiate(video);
+
+        Image thumb = temp.transform.GetChild(0).gameObject.GetComponent<Image>();
+        thumb.sprite = Images[id];
+
+        TextMeshProUGUI title_text = temp.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        title_text.text = title;
+
+        TextMeshProUGUI summary_text = temp.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+        summary_text.text = summary;
+
+        temp.transform.SetParent(parent.transform);
     }
 }
