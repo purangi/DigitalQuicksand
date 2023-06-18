@@ -64,7 +64,7 @@ public class EndingSelected : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)) //scrollview 이동 필요
         {
-            if(clickNum > 0)
+            if(clickNum > 1)
             {
                 ending_files[clickNum - 2].isOn = true;
             }

@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC804\uCCB4 \uC74C\uB7C9"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2ba0f86a65d6ced4ab125ce085039b2f, type: 2}
-  m_sharedMaterial: {fileID: 991830381241256965, guid: 2ba0f86a65d6ced4ab125ce085039b2f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9c0865e5857157348b997832ca1716b9, type: 2}
+  m_sharedMaterial: {fileID: 7765639914045716400, guid: 9c0865e5857157348b997832ca1716b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -329,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   num: 0
   locked: {fileID: 6089513897148922361}
+  thumb: {fileID: 8483343861372518699}
   play: {fileID: 21300000, guid: 4cad11b656c5cdb498c05d8f30cc195d, type: 3}
   tmp: {fileID: 2372404218125005646}
 --- !u!1 &1928833942892676675

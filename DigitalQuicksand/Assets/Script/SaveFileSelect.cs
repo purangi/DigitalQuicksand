@@ -43,9 +43,9 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
             string full_name = reader["full_name"].ToString();
 
-            GameManager.instance.char_name = full_name;
-            GameManager.instance.char_id = char_id;
-            GameManager.instance.week = week;
+            GameManager.instance.character.Name = full_name;
+            GameManager.instance.character.Id = char_id;
+            GameManager.instance.character.Week = week;
 
             UpdateGenres();
             UpdateProperties();
@@ -81,7 +81,11 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
             int count = Int32.Parse(s_reader["count"].ToString());
             int length = Int32.Parse(s_reader["length"].ToString());
 
-            s_gen.Add(new SmallGenre(id, interest, count, length));
+            SqliteDataReader s_reader2 = m_DatabaseAccess.ExecuteQuery("SELECT genre_id FROM small_genre WHERE id = " + id);
+
+            int genre_id = Int32.Parse(s_reader2["genre_id"].ToString());
+
+            s_gen.Add(new SmallGenre(id, genre_id, interest, count, length));
         }
 
         GameManager.instance.genre = genre;

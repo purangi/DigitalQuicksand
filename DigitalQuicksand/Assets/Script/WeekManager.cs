@@ -2,26 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using MyDB;
 
 public class WeekManager : MonoBehaviour
 {
-    private GameManager gameManager;
-    public Text monthText;
-    public Text weekText;
+    public TextMeshProUGUI monthText;
+    public TextMeshProUGUI weekText;
     private int week = 1;
+    private Character character;
 
-    void Start()
+    void Update()
     {
-        //gameManager = GameManager.instance;
-        monthText = transform.Find("month").GetComponent<Text>();
-        weekText = transform.Find("week").GetComponent<Text>();
-        //Debug.Log(gameManager.week);
+        if(GameManager.instance != null)
+        {
+            character = GameManager.instance.character;
+            week = character.Week;
+        }
 
-        //UpdateWeekText(gameManager.week);
-        UpdateWeekText(week);
+        UpdateWeekText();
     }
 
-    void UpdateWeekText(int week)
+    void UpdateWeekText()
     {
         int month = 0;
         int weekInMonth = 0;

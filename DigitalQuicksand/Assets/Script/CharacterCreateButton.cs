@@ -140,8 +140,8 @@ public class CharacterCreateButton : MonoBehaviour
                 gender = 1;
             }
 
-            GameManager.instance.char_name = NameInput.text;
-            GameManager.instance.gender = gender;
+            Character character = new Character(0, name, gender, 1, 0, 0, 0, 0);
+            GameManager.instance.character = character;
 
             CreateGenres();
             CreateProperties();
@@ -177,7 +177,7 @@ public class CharacterCreateButton : MonoBehaviour
                 interest = 10;
             }
 
-            SmallGenre item = new SmallGenre(id, interest, 0, 0);
+            SmallGenre item = new SmallGenre(id, genre_id, interest, 0, 0);
             s_gen.Add(item);
         }
 

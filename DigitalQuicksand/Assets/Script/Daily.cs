@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using MyDB;
 
 public class Daily : MonoBehaviour
 {
@@ -10,49 +12,63 @@ public class Daily : MonoBehaviour
     public GameObject eatObject;
     public GameObject studyObject;
     public GameObject sleepObject;
-    public Text wakeupText;
-    public Text eatText;
-    public Text studyText;
-    public Text sleepText;
-    private Animator wakeup_ani;
-    private Animator eat_ani;
-    private Animator study_ani;
-    private Animator sleep_ani;
-    //public Sprite wake_f_0000;
-    //public Sprite wake_m_0000;
-    //public Sprite eatAnimation_0000;
-    //public Sprite eatAnimation_m_0000;
-    //public Sprite study_f_0000;
-    //public Sprite study_m_0000;
-    //public Sprite sleep_f_0000;
-    //public Sprite sleep_m_0000;
+    public TextMeshProUGUI wakeupText;
+    public TextMeshProUGUI eatText;
+    public TextMeshProUGUI studyText;
+    public TextMeshProUGUI sleepText;
+    public Animator wakeup_ani;
+    public Animator eat_ani;
+    public Animator study_ani;
+    public Animator sleep_ani;
 
-    private void Start()
+    private Character character;
+
+    void Start()
     {
-
-        wakeupText = wakeupObject.GetComponentInChildren<Text>();
-        eatText = eatObject.GetComponentInChildren<Text>();
-        studyText = studyObject.GetComponentInChildren<Text>();
-        sleepText = sleepObject.GetComponentInChildren<Text>();
-        wakeup_ani = wakeupObject.GetComponentInChildren<Animator>();
-        eat_ani = eatObject.GetComponentInChildren<Animator>();
-        study_ani = studyObject.GetComponentInChildren<Animator>();
-        sleep_ani = sleepObject.GetComponentInChildren<Animator>();
-
-        StartCoroutine(RunDailyRoutine());
+        
     }
-    public IEnumerator RunDailyRoutine()
+
+    public void DailyStart()
     {
-        yield return StartCoroutine(Wakeup());
-        yield return StartCoroutine(Eat());
-        yield return StartCoroutine(Study());
-        yield return StartCoroutine(Sleep());
+        DailyObject.SetActive(true);
+
+        character = GameManager.instance.character;
+
+        int num = Random.Range(1, 5);
+        StartCoroutine(RunDailyRoutine(num));
+    }
+
+    public IEnumerator RunDailyRoutine(int num)
+    {
+        Debug.Log(num);
+        switch (num)
+        {
+            case 1:
+                yield return StartCoroutine(Wakeup());
+                break;
+            case 2:
+                yield return StartCoroutine(Eat());
+                break;
+            case 3:
+                yield return StartCoroutine(Study());
+                break;
+            case 4:
+                yield return StartCoroutine(Sleep());
+                break;
+        }
+
+        wakeupObject.SetActive(false);
+        eatObject.SetActive(false);
+        studyObject.SetActive(false);
+        sleepObject.SetActive(false);
 
         DailyObject.SetActive(false);
     }
 
     public IEnumerator Wakeup()
     {
+        wakeupObject.SetActive(true);
+
         int health = GameManager.instance.property[1];
         string wakeupTextStr = "";
 
@@ -66,7 +82,7 @@ public class Daily : MonoBehaviour
         }
         else if (health >= 30 && health <= 59)
         {
-            wakeupTextStr = "조금 만 더 자고 싶다… 5분만…";
+            wakeupTextStr = "조금만 더 자고 싶다… 5분만…";
         }
         else if (health >= 10 && health <= 29)
         {
@@ -77,33 +93,25 @@ public class Daily : MonoBehaviour
             wakeupTextStr = "Zzzz 쿨쿨...";
         }
 
-        wakeupObject.SetActive(true);
-        eatObject.SetActive(false);
-        studyObject.SetActive(false);
-        sleepObject.SetActive(false);
-
         wakeupText.text = wakeupTextStr;
 
-        wakeup_ani.SetInteger("Gender", GameManager.instance.gender);
-        if (GameManager.instance.gender == 0)
+        //wakeup_ani.SetInteger("Gender", GameManager.instance.gender);
+        if (character.Gender == 0)
         {
             wakeup_ani.SetTrigger("Wakeup(f)");
-           // wakeupObject.GetComponent<Image>().sprite = wake_f_0000;
-
         }
         else
         {
             wakeup_ani.SetTrigger("Wakeup(m)");
-            //wakeupObject.GetComponent<Image>().sprite = wake_m_0000;
-
         }
 
-
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
 
     public IEnumerator Eat()
     {
+        eatObject.SetActive(true);
+
         int food = GameManager.instance.genre[6];
         string eatTextStr = "";
 
@@ -128,15 +136,10 @@ public class Daily : MonoBehaviour
             eatTextStr = "사람이 먹을 수 있는 거겠지?";
         }
 
-        wakeupObject.SetActive(false);
-        eatObject.SetActive(true);
-        studyObject.SetActive(false);
-        sleepObject.SetActive(false);
-
         eatText.text = eatTextStr;
 
-        eat_ani.SetInteger("Gender", GameManager.instance.gender);
-        if (GameManager.instance.gender == 0)
+        //eat_ani.SetInteger("Gender", GameManager.instance.gender);
+        if (character.Gender == 0)
         {
             eat_ani.SetTrigger("eat(f)");
             //eatObject.GetComponent<Image>().sprite = eatAnimation_0000;
@@ -147,11 +150,13 @@ public class Daily : MonoBehaviour
             //eatObject.GetComponent<Image>().sprite = eatAnimation_m_0000;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
 
     public IEnumerator Study()
     {
+        studyObject.SetActive(true);
+
         int education = GameManager.instance.genre[3];
         string educationTextStr = "";
 
@@ -176,15 +181,10 @@ public class Daily : MonoBehaviour
             educationTextStr = "(자는 중...)";
         }
 
-        wakeupObject.SetActive(false);
-        eatObject.SetActive(false);
-        studyObject.SetActive(true);
-        sleepObject.SetActive(false);
-
         studyText.text = educationTextStr;
 
-        study_ani.SetInteger("Gender", GameManager.instance.gender);
-        if (GameManager.instance.gender == 0)
+        //study_ani.SetInteger("Gender", GameManager.instance.gender);
+        if (character.Gender == 0)
         {
             study_ani.SetTrigger("study(f)");
             //studyObject.GetComponent<Image>().sprite = study_f_0000;
@@ -195,11 +195,13 @@ public class Daily : MonoBehaviour
             //studyObject.GetComponent<Image>().sprite = study_m_0000;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
 
     public IEnumerator Sleep()
     {
+        sleepObject.SetActive(true);
+
         int addiction = GameManager.instance.property[2];
         string sleepTextStr = "";
 
@@ -224,15 +226,10 @@ public class Daily : MonoBehaviour
             sleepTextStr = "Zzzz 쿨쿨... 눕자마자 잠들었다.";
         }
 
-        wakeupObject.SetActive(false);
-        eatObject.SetActive(false);
-        studyObject.SetActive(false);
-        sleepObject.SetActive(true);
-
         sleepText.text = sleepTextStr;
 
-        sleep_ani.SetInteger("Gender", GameManager.instance.gender);
-        if (GameManager.instance.gender == 0)
+        //sleep_ani.SetInteger("Gender", GameManager.instance.gender);
+        if (character.Gender == 0)
         {
             sleep_ani.SetTrigger("sleep(f)");
             //sleepObject.GetComponent<Image>().sprite = sleep_f_0000;
@@ -243,7 +240,6 @@ public class Daily : MonoBehaviour
             //sleepObject.GetComponent<Image>().sprite = sleep_m_0000;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
-
 }

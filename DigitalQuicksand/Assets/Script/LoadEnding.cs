@@ -14,6 +14,7 @@ public class LoadEnding : MonoBehaviour
 
     public int num;
     public Image locked;
+    public GameObject thumb;
     public Sprite play;
     public TextMeshProUGUI tmp;
 
@@ -45,6 +46,7 @@ public class LoadEnding : MonoBehaviour
                         }
 
                         locked.sprite = play;
+                        thumb.SetActive(true);
                     } else
                     {
 

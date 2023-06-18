@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MyDB;
 
 public class MainChar : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class MainChar : MonoBehaviour
     }
     private void SetCharacterImage()
     {
-        int gender = GameManager.instance.gender;
+        Character character = GameManager.instance.character;
+        int gender = character.Gender;
 
         if (gender == 0)
         {

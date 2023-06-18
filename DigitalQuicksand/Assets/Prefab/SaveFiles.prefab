@@ -220,8 +220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBE48 \uD30C\uC77C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2ba0f86a65d6ced4ab125ce085039b2f, type: 2}
-  m_sharedMaterial: {fileID: 991830381241256965, guid: 2ba0f86a65d6ced4ab125ce085039b2f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 796d4c41cd6bc6f4896dabe6a93ab38f, type: 2}
+  m_sharedMaterial: {fileID: -7648818255780626418, guid: 796d4c41cd6bc6f4896dabe6a93ab38f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -660,3 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b925f14792533754c80dc036fdc5d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  char_id: 0
+  week: 0
+  m_DatabaseFileName: save.db

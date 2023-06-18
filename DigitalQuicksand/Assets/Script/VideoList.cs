@@ -25,10 +25,7 @@ public class VideoList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "save.db");
-        m_DatabaseAccess = new DBAccess("data source = " + filePath);
-
-        RecommendVideo();
+     
     }
 
     // Update is called once per frame
@@ -39,10 +36,12 @@ public class VideoList : MonoBehaviour
 
     public void RecommendVideo()
     {
+        string filePath = Path.Combine(Application.streamingAssetsPath, "save.db");
+        m_DatabaseAccess = new DBAccess("data source = " + filePath);
+
         //소장르 interest 내림차순으로 검색 -> 동일하면 count 내림차순 검색 -> 1번 장르 5개 2,3번 장르 각 3개, 4,5번장르 최소 1개씩
         //1-2-3 동률일 때는 각 4개씩, 나머지 3개는 하위 중 랜덤 선택
         CheckInterest();
-        SearchTopInterest();
     }
 
     private void CheckInterest() 
@@ -61,7 +60,7 @@ public class VideoList : MonoBehaviour
 
             foreach(var item in group)
             {
-                temp_list.Add(new SmallGenre(item.Sgenre_id, item.Interest, item.Count, item.Length));
+                temp_list.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count, item.Length));
             }
 
             List<SmallGenre> temp = temp_list.OrderByDescending(x => x.Count).ToList();
@@ -76,7 +75,7 @@ public class VideoList : MonoBehaviour
 
                     foreach (var item in group2)
                     {
-                        temp2.Add(new SmallGenre(item.Sgenre_id, item.Interest, item.Count, item.Length));
+                        temp2.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count, item.Length));
                     }
 
                     if(sg_num + temp2.Count > 5)
@@ -98,6 +97,8 @@ public class VideoList : MonoBehaviour
                 sg_num += temp.Count;
             }
         }
+
+        SearchTopInterest();
     }
 
     private void SearchTopInterest()
@@ -137,6 +138,7 @@ public class VideoList : MonoBehaviour
         if(top_sgid.Count < 5)
         {
             int num = 5 - top_sgid.Count;
+            Debug.Log(top_sgid.Count + ", " + num);
 
             need_random.OrderBy(g => Guid.NewGuid()).Take(num).ToList().ForEach(x => top_sgid.Add(x));
         }
@@ -157,7 +159,17 @@ public class VideoList : MonoBehaviour
             
             while(reader.Read())
             {
-                Video item = new Video(Int32.Parse(reader["id"].ToString()), reader["title"].ToString(), reader["summary"].ToString());
+                List<int> property = new List<int>();
+
+                for(int j = 9; j < 17; j++)
+                {
+                    property.Add(reader.GetInt32(j));
+                }
+
+                int sg_id2 = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
+
+                VideoResult vid_result = new VideoResult(reader["reaction"].ToString(), Int32.Parse(reader["length"].ToString()),reader.GetInt32(5), sg_id2, Int32.Parse(reader["s_stat"].ToString()), Int32.Parse(reader["s_amount"].ToString()), property);
+                Video item = new Video(Int32.Parse(reader["id"].ToString()), reader["title"].ToString(), reader["summary"].ToString(), vid_result);
                 temp_list.Add(item);
             }
         }
@@ -166,22 +178,20 @@ public class VideoList : MonoBehaviour
 
         for(int i = 0; i < video_list.Count; i++)
         {
-            generateVideo(video_list[i].Video_id, video_list[i].Title, video_list[i].Summary);
+            generateVideo(video_list[i]);
         }
     }
 
-    private void generateVideo(int id, string title, string summary)
+    private void generateVideo(Video vid)
     {
         GameObject temp = Instantiate(video);
 
-        Image thumb = temp.transform.GetChild(0).gameObject.GetComponent<Image>();
-        thumb.sprite = Images[id];
+        SelectVideo sv = temp.GetComponent<SelectVideo>();
 
-        TextMeshProUGUI title_text = temp.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        title_text.text = title;
-
-        TextMeshProUGUI summary_text = temp.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-        summary_text.text = summary;
+        sv.thumb.sprite = Images[vid.Video_id - 1];
+        sv.title.text = vid.Title;
+        sv.summary.text = vid.Summary;
+        sv.vid_result = vid.VidResult;
 
         temp.transform.SetParent(parent.transform);
     }
