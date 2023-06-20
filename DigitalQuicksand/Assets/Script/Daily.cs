@@ -95,7 +95,7 @@ public class Daily : MonoBehaviour
 
         wakeupText.text = wakeupTextStr;
 
-        //wakeup_ani.SetInteger("Gender", GameManager.instance.gender);
+        wakeup_ani.SetInteger("Gender", GameManager.instance.character.Gender);
         if (character.Gender == 0)
         {
             wakeup_ani.SetTrigger("Wakeup(f)");
@@ -138,7 +138,7 @@ public class Daily : MonoBehaviour
 
         eatText.text = eatTextStr;
 
-        //eat_ani.SetInteger("Gender", GameManager.instance.gender);
+        eat_ani.SetInteger("Gender", GameManager.instance.character.Gender);
         if (character.Gender == 0)
         {
             eat_ani.SetTrigger("eat(f)");
@@ -183,7 +183,7 @@ public class Daily : MonoBehaviour
 
         studyText.text = educationTextStr;
 
-        //study_ani.SetInteger("Gender", GameManager.instance.gender);
+        study_ani.SetInteger("Gender", GameManager.instance.character.Gender);
         if (character.Gender == 0)
         {
             study_ani.SetTrigger("study(f)");
@@ -228,7 +228,7 @@ public class Daily : MonoBehaviour
 
         sleepText.text = sleepTextStr;
 
-        //sleep_ani.SetInteger("Gender", GameManager.instance.gender);
+        //sleep_ani.SetInteger("Gender", ameManager.instance.character.Gender);
         if (character.Gender == 0)
         {
             sleep_ani.SetTrigger("sleep(f)");

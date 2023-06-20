@@ -5,7 +5,8 @@ using Yarn.Unity;
 
 public class SettingExit : MonoBehaviour
 {
-    public bool tutorial = false;
+    public bool tutorial = true;
+    public bool tutorial_finish = false;
     private DialogueRunner dialogueRunner;
     public GameObject[] settings;
 
@@ -23,9 +24,9 @@ public class SettingExit : MonoBehaviour
 
     public void CheckTutorial()
     {
-        if(!tutorial)
+        if(tutorial && tutorial_finish)
         {
-            tutorial = true;
+            tutorial = false;
             StartConversation("Tutorial2");
         }
 
@@ -37,5 +38,10 @@ public class SettingExit : MonoBehaviour
     private void StartConversation(string node)
     {
         dialogueRunner.StartDialogue(node);
+    }
+
+    public void TutorialFinish()
+    {
+        tutorial_finish = true;
     }
 }

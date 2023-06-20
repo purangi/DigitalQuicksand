@@ -11,15 +11,13 @@ namespace MyDB
         private int genre_id;
         private int interest;
         private int count;
-        private int length;
 
-        public SmallGenre(int sgenre_id, int genre_id, int interest, int count, int length)
+        public SmallGenre(int sgenre_id, int genre_id, int interest, int count)
         {
             this.sgenre_id = sgenre_id;
             this.genre_id = genre_id;
             this.interest = interest;
             this.count = count;
-            this.length = length;
         }
 
         public int Sgenre_id
@@ -42,12 +40,6 @@ namespace MyDB
         public int Count
         {
             get { return count; }
-            set { count = value; }
-        }
-
-        public int Length
-        {
-            get { return length; }
             set { count = value; }
         }
     }

@@ -42,6 +42,8 @@ public class VideoList : MonoBehaviour
         //소장르 interest 내림차순으로 검색 -> 동일하면 count 내림차순 검색 -> 1번 장르 5개 2,3번 장르 각 3개, 4,5번장르 최소 1개씩
         //1-2-3 동률일 때는 각 4개씩, 나머지 3개는 하위 중 랜덤 선택
         CheckInterest();
+
+        m_DatabaseAccess.CloseSqlConnection();
     }
 
     private void CheckInterest() 
@@ -60,7 +62,7 @@ public class VideoList : MonoBehaviour
 
             foreach(var item in group)
             {
-                temp_list.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count, item.Length));
+                temp_list.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count));
             }
 
             List<SmallGenre> temp = temp_list.OrderByDescending(x => x.Count).ToList();
@@ -75,7 +77,7 @@ public class VideoList : MonoBehaviour
 
                     foreach (var item in group2)
                     {
-                        temp2.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count, item.Length));
+                        temp2.Add(new SmallGenre(item.Sgenre_id, item.Genre_id, item.Interest, item.Count));
                     }
 
                     if(sg_num + temp2.Count > 5)

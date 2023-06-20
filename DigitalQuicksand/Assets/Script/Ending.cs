@@ -24,6 +24,7 @@ public class Ending : MonoBehaviour
         m_DatabaseAccess = new DBAccess("data source = " + filePath);
 
         ShowEnding();
+        m_DatabaseAccess.CloseSqlConnection();
     }
 
     // Update is called once per frame
@@ -40,7 +41,7 @@ public class Ending : MonoBehaviour
         SqliteDataReader reader = m_DatabaseAccess.ExecuteQuery("SELECT summary FROM endings WHERE id = " + id);
         reader.Read();
 
-        ending_text.text = "#" + reader.ToString();
+        ending_text.text = "#" + reader["summary"].ToString();
 
         gold.text = "¼öÀÍ : " + GameManager.instance.character.Gold;
 

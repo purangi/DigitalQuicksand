@@ -36,7 +36,7 @@ public class Monthly : MonoBehaviour
         CheckCount();
 
         number[6].text = character.Gold / 1000.0 + "K";
-        number[7].text = character.Sum_st + "h";
+        number[7].text = character.Sum_st / 60 + "h";
     }
 
     private void MostGenre(int id, int count)
@@ -45,7 +45,7 @@ public class Monthly : MonoBehaviour
             "동물", "뷰티", "교육", "연예", "금융", "음식", "게임", "건강", "정치", "쇼핑"
         };
 
-        number[4].text = genre_name[id];
+        number[4].text = genre_name[id-1];
         number[5].text = count + "회";
     }
 

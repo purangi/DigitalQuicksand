@@ -108,6 +108,31 @@ public class DBAccess : MonoBehaviour
         return ExecuteQuery(query);
     }
 
+    public SqliteDataReader InsertSpecificAndReturn(string tableName, string[] cols, string[] values, string condition)
+    {
+        if (cols.Length != values.Length)
+        {
+            throw new SqliteException("columns.Length != values.Length");
+        }
+        string query = "INSERT INTO " + tableName + "(" + cols[0];
+
+        for (int i = 1; i < cols.Length; ++i)
+        {
+            query += ", " + cols[i];
+        }
+        query += ") VALUES (" + values[0];
+
+        for (int i = 1; i < values.Length; ++i)
+        {
+            query += ", " + values[i];
+        }
+        query += ") " + condition;
+
+        Debug.Log(query);
+
+        return ExecuteQuery(query);
+    }
+
     //테이블 값 수정하기
     public SqliteDataReader UpdateInto(string tableName, string[] cols, string[] colsvalues, string selectkey, string selectvalue)
     {

@@ -177,7 +177,7 @@ public class CharacterCreateButton : MonoBehaviour
                 interest = 10;
             }
 
-            SmallGenre item = new SmallGenre(id, genre_id, interest, 0, 0);
+            SmallGenre item = new SmallGenre(id, genre_id, interest, 0);
             s_gen.Add(item);
         }
 

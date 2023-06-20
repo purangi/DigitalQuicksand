@@ -17,6 +17,7 @@ public class EventManager : MonoBehaviour
     public GameObject blur;
     public GameObject content;
     public GameObject monthly;
+    public GameObject setting_exit;
 
     private List<string> triggeredEvents = new List<string>();
     private bool isBlur = false;
@@ -46,6 +47,12 @@ public class EventManager : MonoBehaviour
         {
             blur.SetActive(false);
         }
+    }
+
+    [YarnCommand("tutorial_ok")]
+    public void TutorialOK()
+    {
+        setting_exit.GetComponent<SettingExit>().TutorialFinish();
     }
 
     [YarnCommand("start_video")]
@@ -422,7 +429,7 @@ public class EventManager : MonoBehaviour
 
         if(good_endings.Count > 0)
         {
-            for(int i = 0; i < good_endings.Count; i++)
+            for(int i = good_endings.Count - 1; i > 0; i--)
             {
                 int num = good_endings[i];
                 switch(num)
@@ -436,6 +443,7 @@ public class EventManager : MonoBehaviour
                             } else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         } else
@@ -453,6 +461,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -471,6 +480,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -489,6 +499,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -507,6 +518,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -523,6 +535,7 @@ public class EventManager : MonoBehaviour
                         else
                         {
                             good_endings.RemoveAt(num);
+                            i--;
                             normal_endings.Add(num);
                         }
                         break;
@@ -536,6 +549,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -554,6 +568,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -572,6 +587,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -590,6 +606,7 @@ public class EventManager : MonoBehaviour
                             else
                             {
                                 good_endings.RemoveAt(num);
+                                i--;
                                 normal_endings.Add(num);
                             }
                         }
@@ -606,7 +623,7 @@ public class EventManager : MonoBehaviour
         {
             skill_max = 0;
 
-            for(int i = 0; i < normal_endings.Count; i++)
+            for(int i = normal_endings.Count - 1; i > 0; i--)
             {
                 int num = normal_endings[i];
 
@@ -624,7 +641,7 @@ public class EventManager : MonoBehaviour
         {
             skill_max = 0;
 
-            for(int i = 0; i < bad_endings.Count; i++)
+            for(int i = bad_endings.Count - 1; i > 0; i--)
             {
                 int num = bad_endings[i];
 

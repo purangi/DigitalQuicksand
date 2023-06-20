@@ -7721,13 +7721,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1029075007}
     m_Modifications:
+    - target: {fileID: 643549632761569391, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643549632761569391, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: is_title
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643549632761569391, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: load_save
+      value: 
+      objectReference: {fileID: 186068072}
+    - target: {fileID: 4749157454650124313, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: num
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749157454650124313, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: is_title
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749157454650124313, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: load_save
+      value: 
+      objectReference: {fileID: 186068072}
     - target: {fileID: 6495141658495512583, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
       propertyPath: m_Name
       value: Save
       objectReference: {fileID: 0}
     - target: {fileID: 6495141658495512583, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043929026644092611, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: num
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043929026644092611, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: is_title
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043929026644092611, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: load_save
+      value: 
+      objectReference: {fileID: 186068072}
+    - target: {fileID: 8518683413679070943, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
+      propertyPath: is_title
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8781134015908778903, guid: 4c7a40f8ac31b9d44a77e8c32c42c89f, type: 3}
       propertyPath: m_Pivot.x
