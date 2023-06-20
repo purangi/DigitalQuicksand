@@ -18,6 +18,7 @@ public class EventManager : MonoBehaviour
     public GameObject content;
     public GameObject monthly;
     public GameObject setting_exit;
+    public GameObject off;
 
     private List<string> triggeredEvents = new List<string>();
     private bool isBlur = false;
@@ -33,6 +34,16 @@ public class EventManager : MonoBehaviour
         {
             Ending();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            off.SetActive(true);
+        }
+    }
+
+    public void TurnOff()
+    {
+        Application.Quit();
     }
 
     [YarnCommand("show_blur")] 
