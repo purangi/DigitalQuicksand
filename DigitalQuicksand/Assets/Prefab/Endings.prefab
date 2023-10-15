@@ -221,7 +221,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8836843387661592767}
   - component: {fileID: 3068893948674944628}
-  - component: {fileID: 700592683174435888}
   - component: {fileID: 5514599733073327716}
   m_Layer: 5
   m_Name: Endings
@@ -303,18 +302,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
---- !u!114 &700592683174435888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830997128001463334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a20b196090a13048ab4e1e99facbc1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5514599733073327716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +319,7 @@ MonoBehaviour:
   thumb: {fileID: 8483343861372518699}
   play: {fileID: 21300000, guid: 4cad11b656c5cdb498c05d8f30cc195d, type: 3}
   tmp: {fileID: 2372404218125005646}
+  img: {fileID: 0}
 --- !u!1 &1928833942892676675
 GameObject:
   m_ObjectHideFlags: 0

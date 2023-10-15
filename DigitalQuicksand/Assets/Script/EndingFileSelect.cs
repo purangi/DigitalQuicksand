@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class EndingFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private Toggle toggle;
+    public GameObject img;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,7 @@ public class EndingFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnt
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Click");
+        img.SetActive(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

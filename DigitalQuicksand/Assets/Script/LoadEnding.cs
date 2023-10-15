@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using TMPro;
 using System;
 using System.IO;
 using Mono.Data.Sqlite;
 
-public class LoadEnding : MonoBehaviour
+public class LoadEnding : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private DBAccess m_DatabaseAccess;
+    private Toggle toggle;
 
     public int num;
     public Image locked;
     public GameObject thumb;
     public Sprite play;
     public TextMeshProUGUI tmp;
+    public GameObject img;
 
     // Start is called before the first frame update
     void Start()
@@ -60,11 +63,38 @@ public class LoadEnding : MonoBehaviour
         {
             Debug.Log(e.Message);
         }
+
+        toggle = GetComponent<Toggle>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //check unlocked
+        if(thumb.activeSelf == true)
+        {
+            Image ending = img.GetComponent<Image>();
+            ending.sprite = thumb.transform.Find("Ending").gameObject.GetComponent<Image>().sprite;
+            img.SetActive(true);
+        } else
+        {
+            //엔딩 오픈 전
+            Debug.Log("엔딩 안열림");
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        toggle.isOn = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        toggle.isOn = false;
     }
 }

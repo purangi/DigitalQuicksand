@@ -113,7 +113,7 @@ tags:
 -> Player: 지금 모습 그대로
 	근데 지금도 난 충분히 멋진 거 같아. 그냥 이대로 가면 되겠다.
 	Alert: <i>뷰티기술 +10</i>
-	<<set_genre Ev entSystem 2 10>>
+	<<set_genre EventSystem 2 10>>
 -> Player: 메이크업 영상 따라하기
 	오 이렇게 이렇게.. <br>(거울을 보며) 이거다! 마음에 들어 이렇게 하고 가야지.
 	Alert: <i>뷰티 기술 +20</i>

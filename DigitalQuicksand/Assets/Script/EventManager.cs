@@ -410,12 +410,14 @@ public class EventManager : MonoBehaviour
             }
         }
     }
-
+    
+    //엔딩 분기점
     [YarnCommand("ending")]
     public void Ending()
     {
         int ending = 0;
         int skill_max = 0;
+        int grade = 0;
 
         List<int> good_endings = new List<int>();
         List<int> normal_endings = new List<int>();
@@ -438,248 +440,220 @@ public class EventManager : MonoBehaviour
             }
         }
 
-        if(good_endings.Count > 0)
+        try
         {
-            for(int i = good_endings.Count - 1; i > 0; i--)
+            if (good_endings.Count > 0)
             {
-                int num = good_endings[i];
-                switch(num)
+                for (int i = 0; i < good_endings.Count; i++)
                 {
-                    case 1:
-                        if (prop[6] <= 50)
-                        {
-                            if (genre[num] > skill_max)
+                    int num = good_endings[i];
+                    switch (num)
+                    {
+                        case 1:
+                            if (prop[6] <= 50)
                             {
-                                skill_max = genre[num];
-                            } else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                } else
+                                {
+                                    normal_endings.Add(num);
+                                }
                             }
-                        } else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 2:
-                        if (prop[5] >= 60)
-                        {
+                            break;
+                        case 2:
+                            if (prop[5] >= 60)
+                            {
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
+                            }
+                            break;
+                        case 3:
+                            if (prop[2] <= 30)
+                            {
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
+                            }
+                            break;
+                        case 4:
+                            if (prop[4] >= 60)
+                            {
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
+                            }
+                            break;
+                        case 5:
+                            if (prop[8] <= 30)
+                            {
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
+                            }
+                            break;
+                        case 6:
                             if (genre[num] > skill_max)
                             {
                                 skill_max = genre[num];
+                                ending = num;
+                                grade = 1;
                             }
                             else
                             {
-                                good_endings.RemoveAt(num);
-                                i--;
                                 normal_endings.Add(num);
                             }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 3:
-                        if (prop[2] <= 30)
-                        {
-                            if (genre[num] > skill_max)
+                            break;
+                        case 7:
+                            if (prop[3] <= 50)
                             {
-                                skill_max = genre[num];
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
                             }
-                            else
+                            break;
+                        case 8:
+                            if (prop[1] <= 70)
                             {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
                             }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 4:
-                        if (prop[4] >= 60)
-                        {
-                            if (genre[num] > skill_max)
+                            break;
+                        case 9:
+                            if (prop[7] <= 30)
                             {
-                                skill_max = genre[num];
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
                             }
-                            else
+                            break;
+                        case 10:
+                            if (prop[8] <= 20)
                             {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
+                                if (genre[num] > skill_max)
+                                {
+                                    skill_max = genre[num];
+                                    ending = num;
+                                    grade = 1;
+                                }
+                                else
+                                {
+                                    normal_endings.Add(num);
+                                }
                             }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 5:
-                        if (prop[8] <= 30)
-                        {
-                            if (genre[num] > skill_max)
-                            {
-                                skill_max = genre[num];
-                            }
-                            else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
-                            }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 6:
-                        if (genre[num] > skill_max)
-                        {
-                            skill_max = genre[num];
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                            i--;
-                            normal_endings.Add(num);
-                        }
-                        break;
-                    case 7:
-                        if (prop[3] <= 50)
-                        {
-                            if (genre[num] > skill_max)
-                            {
-                                skill_max = genre[num];
-                            }
-                            else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
-                            }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 8:
-                        if (prop[1] <= 70)
-                        {
-                            if (genre[num] > skill_max)
-                            {
-                                skill_max = genre[num];
-                            }
-                            else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
-                            }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 9:
-                        if (prop[7] <= 30)
-                        {
-                            if (genre[num] > skill_max)
-                            {
-                                skill_max = genre[num];
-                            }
-                            else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
-                            }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
-                    case 10:
-                        if (prop[8] <= 20)
-                        {
-                            if (genre[num] > skill_max)
-                            {
-                                skill_max = genre[num];
-                            }
-                            else
-                            {
-                                good_endings.RemoveAt(num);
-                                i--;
-                                normal_endings.Add(num);
-                            }
-                        }
-                        else
-                        {
-                            good_endings.RemoveAt(num);
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
-        } //리스트에 남은 것 중 마지막 것이 가장 큼
 
-        if(good_endings.Count == 0 && normal_endings.Count > 0)
-        {
-            skill_max = 0;
-
-            for(int i = normal_endings.Count - 1; i > 0; i--)
+            if (ending == 0 && normal_endings.Count > 0)
             {
-                int num = normal_endings[i];
+                skill_max = 0;
 
-                if (genre[num] > skill_max)
+                for (int i = 0; i < normal_endings.Count; i++)
                 {
-                    skill_max = genre[num];
-                } else
-                {
-                    normal_endings.RemoveAt(num);
+                    int num = normal_endings[i];
+
+                    if (genre[num] > skill_max)
+                    {
+                        skill_max = genre[num];
+                        ending = num;
+                        grade = 2;
+                    }
                 }
             }
-        }
 
-        if(good_endings.Count == 0 && normal_endings.Count == 0 && bad_endings.Count > 0)
-        {
-            skill_max = 0;
-
-            for(int i = bad_endings.Count - 1; i > 0; i--)
+            if (ending == 0 && bad_endings.Count > 0)
             {
-                int num = bad_endings[i];
+                skill_max = 0;
 
-                if (genre[num] < skill_max)
+                for (int i = 0; i < bad_endings.Count; i++)
                 {
-                    skill_max = genre[num];
-                } else
-                {
-                    bad_endings.RemoveAt(num);
+                    int num = bad_endings[i];
+
+                    if (genre[num] > skill_max)
+                    {
+                        skill_max = genre[num];
+                        ending = num;
+                        grade = 3;
+                    }
                 }
             }
-        }
 
-        if (GameManager.instance.property[1] <= 0)
+            if (GameManager.instance.property[1] <= 0)
+            {
+                ending = 31;
+            }
+            else if (grade == 1)
+            {
+                ending = ending * 3 - 2;
+            }
+            else if (grade == 2)
+            {
+                ending = ending * 3 - 1;
+            }
+            else if(grade == 3)
+            {
+                ending = ending * 3;
+            }
+        } catch
         {
             ending = 31;
-        } else if(good_endings.Count > 0)
-        {
-            ending = good_endings[good_endings.Count - 1] * 3 - 2;
-        } else if(normal_endings.Count > 0)
-        {
-            ending = normal_endings[normal_endings.Count - 1] * 3 - 1;
-        } else
-        {
-            ending = bad_endings[bad_endings.Count - 1] * 3;
         }
-
+        
         GameManager.instance.ending = ending;
         SceneManager.LoadScene("Ending");
     }
