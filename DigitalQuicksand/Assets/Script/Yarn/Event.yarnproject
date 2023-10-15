@@ -1,0 +1,19 @@
+﻿title: Start
+tags:
+---
+아 너무 배고프다 뭐 좀 먹을까?
+
+-> Player: 거울보기
+	<<run setProperty(1, getProperty(1) - 20)>> // decrease health
+	<<run setProperty(3, getProperty(3) + 30)>> // increase stress
+	아냐 지금도 이렇게 뚱뚱한데 뭘 먹어.. 자존감 -20, 스트레스 +30
+-> Player: 햄버거 주문
+	<<run setGenre(6, getGenre(6) - 30)>> // decrease food skill
+	<<run setProperty(3, getProperty(3) - 50)>> // decrease stress
+    역시 햄버거 너무 맛있어. 스트레스 -50, 음식기술 -30
+-> Player: 편의점 먹방보며 간편식품 먹기
+	<<run setGenre(6, getGenre(6) - 10)>> // decrease food skill
+	<<run setProperty(3, getProperty(3) - 30)>> // decrease stress
+	<<run setProperty(2, getProperty(2) + 10)>> // increase addiction
+	이거 맛 괜찮네?! 스트레스 -30, 음식기술 -10, 중독 +10
+===
