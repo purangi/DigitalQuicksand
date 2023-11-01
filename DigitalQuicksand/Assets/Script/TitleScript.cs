@@ -13,6 +13,7 @@ public class TitleScript : MonoBehaviour
 
     private void Start()
     {
+        Screen.SetResolution(1920, 1080, true);
         if (TitlePress != null)
         {
             // 이미지의 알파값과 기본 색상을 초기화합니다.

@@ -89,7 +89,7 @@ public class TypingEffect : MonoBehaviour
         } else if(count >= 6)
         {
             //씬체인지
-            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene("CharacterCreation");
         } else
         {
             Debug.Log("씬 체인지 오류");

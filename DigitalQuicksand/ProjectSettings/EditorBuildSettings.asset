@@ -17,9 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prologue.unity
     guid: eb21cf00639274d4aa637af719de47f2
-  - enabled: 1
-    path: Assets/Scenes/testscene.unity
-    guid: d4d465bc4e957f64786f63dff352642b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/CharacterCreation.unity
     guid: 59f76a6faf62cd24b882695c8c679468
