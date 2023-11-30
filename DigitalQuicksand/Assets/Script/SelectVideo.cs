@@ -28,6 +28,7 @@ public class SelectVideo : MonoBehaviour
 
     public void ButtonClicked()
     {
+        SoundManager.instance.PlaySound("video_click");
         if(reaction_pop.activeSelf == true)
         {
             reaction_pop.GetComponent<Reaction>().Stop();

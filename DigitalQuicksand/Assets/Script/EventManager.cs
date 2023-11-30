@@ -656,5 +656,6 @@ public class EventManager : MonoBehaviour
         
         GameManager.instance.ending = ending;
         SceneManager.LoadScene("Ending");
+        SoundManager.instance.PlaySound("result");
     }
 }

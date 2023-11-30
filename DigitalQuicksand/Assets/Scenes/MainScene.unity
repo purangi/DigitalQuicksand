@@ -8370,7 +8370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477355968774303994, guid: dcee26680952e1d418eec7ceb81fe786, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00008201599
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6477355968774303994, guid: dcee26680952e1d418eec7ceb81fe786, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10280,6 +10280,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1194688737}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1194688735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10327,9 +10339,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1194688732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b3b306583a89fe4fa3c7fc4dc28b2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 27066d59edd5a674782fff1082dedfee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound: analysis_load
 --- !u!1 &1219968316
 GameObject:
   m_ObjectHideFlags: 0
@@ -11952,6 +11965,7 @@ GameObject:
   - component: {fileID: 1490114195}
   - component: {fileID: 1490114194}
   - component: {fileID: 1490114193}
+  - component: {fileID: 1490114196}
   m_Layer: 5
   m_Name: SettingBtn
   m_TagString: Untagged
@@ -12047,6 +12061,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1490114196}
+        m_TargetAssemblyTypeName: PlaySound, Assembly-CSharp
+        m_MethodName: Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1490114194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12085,6 +12111,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490114191}
   m_CullTransparentMesh: 1
+--- !u!114 &1490114196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490114191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27066d59edd5a674782fff1082dedfee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: tutorial_click
 --- !u!1 &1498265994
 GameObject:
   m_ObjectHideFlags: 0

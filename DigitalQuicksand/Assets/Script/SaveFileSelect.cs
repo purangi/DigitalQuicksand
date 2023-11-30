@@ -64,6 +64,7 @@ public class SaveFileSelect : MonoBehaviour, IPointerClickHandler, IPointerEnter
                         UpdateProperties();
 
                         SceneManager.LoadScene("MainScene");
+                        SoundManager.instance.BGMChange("MainScene");
                         m_DatabaseAccess.CloseSqlConnection();
                     }
                     else

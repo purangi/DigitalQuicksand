@@ -70,22 +70,15 @@ public class LoadEnding : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        {
+            ClickedEvent();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //check unlocked
-        if(thumb.activeSelf == true)
-        {
-            Image ending = img.GetComponent<Image>();
-            ending.sprite = thumb.transform.Find("Ending").gameObject.GetComponent<Image>().sprite;
-            img.SetActive(true);
-        } else
-        {
-            //엔딩 오픈 전
-            Debug.Log("엔딩 안열림");
-        }
+        ClickedEvent();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -96,5 +89,21 @@ public class LoadEnding : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void OnPointerExit(PointerEventData eventData)
     {
         toggle.isOn = false;
+    }
+
+    public void ClickedEvent()
+    {
+        if (thumb.activeSelf == true)
+        {
+            Image ending = img.GetComponent<Image>();
+            ending.sprite = thumb.transform.Find("Ending").gameObject.GetComponent<Image>().sprite;
+            img.SetActive(true);
+            SoundManager.instance.PlaySound("click_bobit");
+        }
+        else
+        {
+            //엔딩 오픈 전
+            Debug.Log("엔딩 안열림");
+        }
     }
 }

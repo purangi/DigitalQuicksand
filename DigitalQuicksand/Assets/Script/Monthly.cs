@@ -23,6 +23,7 @@ public class Monthly : MonoBehaviour
 
     public void ShowResult()
     {
+        SoundManager.instance.PlaySound("result4");
         Character character = GameManager.instance.character;
 
         number[0].text = (character.Week / 4 + 2) + "¿ù";
@@ -37,6 +38,8 @@ public class Monthly : MonoBehaviour
 
         number[6].text = character.Gold / 1000.0 + "K";
         number[7].text = character.Sum_st / 60 + "h";
+
+        SoundManager.instance.PlaySound("result4");
     }
 
     private void MostGenre(int id, int count)

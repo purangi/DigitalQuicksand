@@ -9,7 +9,7 @@ using Mono.Data.Sqlite;
 public class TutorialSkip : MonoBehaviour
 {
     private string m_DatabaseFileName = "save.db";
-    private string m_TableName = "save_file";
+    private string m_TableName = "character";
     private DBAccess m_DatabaseAccess;
 
     public Button skipButton;

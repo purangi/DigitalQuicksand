@@ -58,19 +58,24 @@ public class CharacterCreateButton : MonoBehaviour
         if(!CheckName())
         {
             popup_script.Showup("이름을 입력해 주세요.");
+            SoundManager.instance.PlaySound("char_error");
         } else if(!CheckPreference())
         {
             popup_script.Showup("선호 콘텐츠를 3개 선택해 주세요.");
+            SoundManager.instance.PlaySound("char_error");
         } else if(!CheckProperty())
         {
             popup_script.Showup("활성화된 특성이 없습니다.");
+            SoundManager.instance.PlaySound("char_error");
         } else if(!Property.GetComponent<ScoreSum>().isScoreOK)
         {
             popup_script.Showup("특성 수치의 합이 범위 밖입니다. <br>-10에서 +10 사이로 설정해 주세요.");
+            SoundManager.instance.PlaySound("char_error");
         } else
         {
             CharacterCreate();
             SceneManager.LoadScene(scene_name);
+            SoundManager.instance.BGMChange("MainScene");
         }
     }
     private bool CheckName()
@@ -131,6 +136,7 @@ public class CharacterCreateButton : MonoBehaviour
     {
         try
         {
+            SoundManager.instance.PlaySound("char_creation");
             string name = NameInput.text;
 
             int gender = 0;

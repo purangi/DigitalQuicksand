@@ -31,6 +31,7 @@ public class TitleMenuSelect : MonoBehaviour, IPointerClickHandler, IPointerEnte
             if (num == 0)
             {
                 SceneManager.LoadScene("Prologue");
+                SoundManager.instance.BGMChange("Prologue");
             }
             else if (num < 4)
             {
@@ -50,11 +51,13 @@ public class TitleMenuSelect : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public void OnPointerClick(PointerEventData eventData)
     {
         Selected(btn_num);
+        SoundManager.instance.PlaySound("click_bobit");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         toggle.isOn = true;
+        SoundManager.instance.PlaySound("cursor_move");
     }
 
     public void OnPointerExit(PointerEventData eventData)

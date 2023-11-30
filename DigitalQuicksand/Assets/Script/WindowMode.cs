@@ -11,6 +11,14 @@ public class WindowMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(Screen.fullScreen == true)
+        {
+            m_Dropdown.value = 0;
+        } else
+        {
+            m_Dropdown.value = 1;
+        }
+
         m_Dropdown.onValueChanged.AddListener(delegate {
             DropdownValueChanged(m_Dropdown);
         });

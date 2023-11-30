@@ -40,17 +40,6 @@ public class EndingSelected : MonoBehaviour
                 clickNum = i;
             }
         }
-        if(clickNum < 12)
-        {
-            scroll.value = 0f;
-        }
-        else if(clickNum >= 12 && clickNum < 24)
-        {
-            scroll.value = 0.594f;
-        } else if(clickNum >= 24)
-        {
-            scroll.value = 1f;
-        }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -68,6 +57,8 @@ public class EndingSelected : MonoBehaviour
             {
                 ending_files[clickNum - 2].isOn = true;
             }
+
+            AutoScroll(clickNum - 2);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -88,6 +79,8 @@ public class EndingSelected : MonoBehaviour
             {
                 ending_files[30].isOn = true;
             }
+
+            AutoScroll(clickNum + 2);
         }
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -98,5 +91,21 @@ public class EndingSelected : MonoBehaviour
     void buttonClicked()
     {
         //선택 연결
+    }
+
+    void AutoScroll(int clickNum)
+    {
+        if (clickNum < 12)
+        {
+            scroll.value = 0f;
+        }
+        else if (clickNum >= 12 && clickNum < 22)
+        {
+            scroll.value = 0.594f;
+        }
+        else if (clickNum >= 22)
+        {
+            scroll.value = 1f;
+        }
     }
 }

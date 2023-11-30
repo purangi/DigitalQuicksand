@@ -7,6 +7,7 @@ public class TitleMenuController : MonoBehaviour
 {
     public GameObject ui;
     public GameObject off;
+    public Button exit;
 
     private int clickNum = 0;
     private List<Toggle> btns = new List<Toggle>();
@@ -49,11 +50,17 @@ public class TitleMenuController : MonoBehaviour
             {
                 buttonClicked();
             }
-        }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                off.SetActive(true);
+            }
+        } else
         {
-            off.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                exit.onClick.Invoke();
+            }
         }
     }
 
@@ -67,12 +74,14 @@ public class TitleMenuController : MonoBehaviour
         clickNum = clickNum % 4;
 
         btns[clickNum].isOn = true;
+        SoundManager.instance.PlaySound("cursor_move");
     }
 
     void buttonClicked()
     {
         GameObject obj = transform.GetChild(clickNum).gameObject;
         obj.GetComponent<TitleMenuSelect>().Selected(clickNum);
+        SoundManager.instance.PlaySound("click_bobit");
     }
 
     public void TurnOff()

@@ -33,7 +33,8 @@ public class ToggleSelected : MonoBehaviour, IPointerClickHandler
 
     public void TextBold(Toggle toggle)
     {
-        if(toggle.isOn)
+        SoundManager.instance.PlaySound("mouse_click");
+        if (toggle.isOn)
         {
             text_1.color = black;
         } else
@@ -44,6 +45,8 @@ public class ToggleSelected : MonoBehaviour, IPointerClickHandler
 
     public void TextColorChange(Toggle toggle)
     {
+        SoundManager.instance.PlaySound("mouse_click");
+
         if (toggle.isOn)
         {
             text_1.color = good;
@@ -61,6 +64,7 @@ public class ToggleSelected : MonoBehaviour, IPointerClickHandler
         if(eventData.button == PointerEventData.InputButton.Right)
         {
             obj.interactable = !obj.interactable;
+            SoundManager.instance.PlaySound("mouse_click");
             property.GetComponent<ScoreSum>().OnToggleValueChanged(obj.interactable);
             SelectionActive();
         }
