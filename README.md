@@ -7,7 +7,7 @@
 - 한국저작권위원회 컴퓨터프로그램저작물 등록 (등록 번호 : C-2023-059539)
 
 ### Play
-[빌드 파일 링크] (https://drive.google.com/file/d/1e97AvOD1DtFlOJ9NIJYZvCWdP_RMoGs3/view?usp=drive_link)
+[빌드 파일 링크](https://drive.google.com/file/d/1e97AvOD1DtFlOJ9NIJYZvCWdP_RMoGs3/view?usp=drive_link)
 
 [~웹 빌드 링크~](https://play.unity.com/mg/other/webgl-builds-405746) → dll not found 오류남
 
