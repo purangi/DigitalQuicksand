@@ -6,6 +6,9 @@
 - 한국인터넷정보학회 2023 추계 학술 대회 포스터 발표
 - 한국저작권위원회 컴퓨터프로그램저작물 등록 (등록 번호 : C-2023-059539)
 
+### Play
+[웹 빌드 링크](https://play.unity.com/mg/other/webgl-builds-405746)
+
 ### ERD 다이어그램
 ![image](https://github.com/purangi/DigitalQuicksand/assets/68212670/7f4b6858-27ee-4b54-9cce-9939a22fe3df)
 
